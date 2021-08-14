@@ -8,7 +8,7 @@ on:
 
 jobs:
   unit_tests:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
@@ -36,14 +36,14 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
 
-      #- name: ui tests
-      #  uses: reactivecircus/android-emulator-runner@v2
-      #  with:
-      #    api-level: 30
-      #    script: ./gradlew connectedDebugAndroidTest
+      - name: ui tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 30
+          script: ./gradlew connectedDebugAndroidTest
 
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 

@@ -23,7 +23,7 @@ android {
         manifestPlaceholders = [google_pay_id: GOOGLE_PAY_PACKAGE_ID]
         buildConfigField "String", "GOOGLE_PAY_PACKAGE_ID", "\"" + GOOGLE_PAY_PACKAGE_ID + "\""
 
-        testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
 
     buildFeatures {
@@ -94,5 +94,6 @@ dependencies {
     testImplementation 'org.mockito.kotlin:mockito-kotlin:3.2.0'
 
     debugImplementation 'androidx.compose.ui:ui-test-manifest:1.0.1'
+    androidTestImplementation "androidx.compose.ui:ui-test:1.0.1"
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.1'
 }
