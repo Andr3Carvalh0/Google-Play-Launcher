@@ -35,6 +35,9 @@ jobs:
 
   ui_tests:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [ 29 ]
     steps:
       - uses: actions/checkout@v2
 
@@ -65,7 +68,7 @@ jobs:
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: ${{ matrix.api-level }}
           force-avd-creation: false
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
@@ -74,7 +77,7 @@ jobs:
       - name: ui tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 30
+          api-level: ${{ matrix.api-level }}
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
