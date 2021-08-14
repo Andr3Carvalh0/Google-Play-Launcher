@@ -23,8 +23,6 @@ class MainContentTest {
         val context = ApplicationProvider.getApplicationContext<Context>()
         val expectedText = context.getString(R.string.no_gpay_installed)
 
-        composeTestRule.onNodeWithText(
-            expectedText
-        ).assertIsDisplayed()
+        composeTestRule.onNodeWithText(expectedText).assertIsDisplayed()
     }
 }

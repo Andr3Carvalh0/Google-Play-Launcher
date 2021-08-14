@@ -1,7 +1,6 @@
 package pt.andre.googlepaylauncher.main.vm
 
 import android.content.Intent
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

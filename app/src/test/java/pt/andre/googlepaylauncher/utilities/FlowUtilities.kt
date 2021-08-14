@@ -1,12 +1,9 @@
 package pt.andre.googlepaylauncher.utilities
 
+import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert
 import org.junit.Test
 
 internal class FlowUtilitiesTest {
@@ -21,7 +18,7 @@ internal class FlowUtilitiesTest {
             value = it
         }
 
-        Assert.assertEquals(value, -1)
+        assertEquals(value, -1)
     }
 
     @Test
@@ -37,6 +34,6 @@ internal class FlowUtilitiesTest {
             value = it
         }
 
-        Assert.assertEquals(value, 2)
+        assertEquals(value, 2)
     }
 }
