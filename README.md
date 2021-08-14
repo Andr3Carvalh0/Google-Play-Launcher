@@ -1,4 +1,4 @@
-# Google Play Launcher
+# Google Pay Launcher
 
 A small Android application that launches the Google Pay app.
 

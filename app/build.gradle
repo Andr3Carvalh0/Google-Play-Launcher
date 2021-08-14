@@ -5,8 +5,8 @@ plugins {
 
 String GOOGLE_PAY_PACKAGE_ID = "com.google.android.apps.walletnfcrel"
 
-String KEY = System.getenv("GOOGLE_PLAY_LAUNCHER_KEY")
-String PASSWORD = System.getenv("GOOGLE_PLAY_LAUNCHER_PASSWORD")
+String KEY = System.getenv("GOOGLE_PAY_LAUNCHER_KEY")
+String PASSWORD = System.getenv("GOOGLE_PAY_LAUNCHER_PASSWORD")
 
 android {
     compileSdk 30
