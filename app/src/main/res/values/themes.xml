@@ -4,7 +4,7 @@
         <item name="android:statusBarColor">@color/backgroundColor</item>
         <item name="android:navigationBarColor">@color/backgroundColor</item>
         <item name="android:windowBackground">@color/backgroundColor</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="m">@bool/isLightMode</item>
+        <item name="android:windowLightStatusBar">@bool/isLightMode</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">@bool/isLightMode</item>
     </style>
 </resources>
