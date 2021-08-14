@@ -24,7 +24,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile rootProject.file('./secrets/release.keystore')
+            storeFile rootProject.file('./secrets/release.jks')
             keyAlias KEY
             keyPassword PASSWORD
             storePassword PASSWORD
