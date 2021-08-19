@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Google Pay Launcher</string>
-    <string name="no_gpay_installed">You don\'t have Google Play installed :/</string>
+    <string name="no_gpay_installed">You don\'t have Google Play installed.</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import pt.andre.googlepaylauncher.main.ui.MainContent
 import pt.andre.googlepaylauncher.main.vm.MainViewModel
+import pt.andre.googlepaylauncher.utilities.ThemeComposition
 import pt.andre.googlepaylauncher.utilities.nonNullCollect
 
 @AndroidEntryPoint
@@ -33,8 +34,10 @@ class MainActivity : AppCompatActivity() {
             setContent {
                 val hasError = viewModel.error.value
 
-                if (hasError) {
-                    MainContent()
+                ThemeComposition {
+                    if (hasError) {
+                        MainContent()
+                    }
                 }
             }
         }

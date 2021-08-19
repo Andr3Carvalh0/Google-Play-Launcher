@@ -20,29 +20,24 @@ internal class MainViewModelTest {
 
     @Test
     fun `when application isnt installed we emit error message`() = runBlocking {
-        runMainViewModelTests(
-            expectedError = true
-        )
+        runMainViewModelTests()
     }
 
     @Test
     fun `when application is installed we emit the application intent`() = runBlocking {
-        runMainViewModelTests(
-            expectedIntent = intent
-        )
+        runMainViewModelTests(intent)
     }
 
     private fun runMainViewModelTests(
-        expectedIntent: Intent? = null,
-        expectedError: Boolean = false
+        intent: Intent? = null
     ) = runBlocking {
         val vm = MainViewModel(applicationManager)
 
-        whenever(applicationManager.getApplicationStartIntent(id)).thenReturn(expectedIntent)
+        whenever(applicationManager.getApplicationStartIntent(id)).thenReturn(intent)
 
         vm.initialize()
 
-        assertEquals(expectedIntent, vm.intent.first())
-        assertEquals(expectedError, vm.error.value)
+        assertEquals(intent, vm.intent.first())
+        assertEquals(intent == null, vm.error.value)
     }
 }

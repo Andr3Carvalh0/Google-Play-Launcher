@@ -2,4 +2,7 @@
 <resources>
     <color name="backgroundColor">#FFFFFF</color>
     <color name="textColor">#202020</color>
+
+    <color name="iconLightTint">#202020</color>
+    <color name="iconDarkTint">#FFFFFF</color>
 </resources>
