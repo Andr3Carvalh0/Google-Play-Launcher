@@ -1,6 +1,6 @@
 package pt.andre.googlepaylauncher.utilities
 
-/*
+/**
  * Copyright 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,6 +14,8 @@ package pt.andre.googlepaylauncher.utilities
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Somewhat modified by: André Carvalho
  */
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -25,11 +27,15 @@ import androidx.compose.ui.test.captureToImage
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.io.FileOutputStream
+import kotlin.math.abs
 
 data class TestCase(
     val folder: String,
-    val filename: String = ""
-)
+    val filename: String = "",
+    val threshold: Float = 0.1f
+) {
+    fun safeFolderPathname(): String = folder.replace("/", "_")
+}
 
 object ScreenshotComparator {
     internal fun clean(
@@ -60,7 +66,7 @@ object ScreenshotComparator {
         // Save screenshot to file for debugging
         saveScreenshot(
             folder = testCase.folder,
-            filename = "${testCase.folder.stringSafePathname}_${testCase.filename}_${System.currentTimeMillis()}",
+            filename = "${testCase.safeFolderPathname()}_${testCase.filename}_${System.currentTimeMillis()}",
             bitmap = bitmap
         )
 
@@ -68,14 +74,13 @@ object ScreenshotComparator {
             .context.resources.assets.open("${testCase.folder}/${testCase.filename}.png")
             .use { BitmapFactory.decodeStream(it) }
 
-        expectedBitmap.compare(bitmap)
+        val difference = expectedBitmap.compare(bitmap)
+
+        if (difference >= testCase.threshold) {
+            throw AssertionError("Sizes match but bitmap content has differences")
+        }
     }
 }
-
-private val String.stringSafePathname: String
-    get() {
-        return replace("/", "_")
-    }
 
 private fun saveScreenshot(
     folder: String,
@@ -97,21 +102,43 @@ private fun saveScreenshot(
     println("Saved screenshot to $path/$filename.png")
 }
 
-private fun Bitmap.compare(other: Bitmap) {
+/**
+ * Modified to expect the bitmap to be similar but not 100% identical.
+ * (Different GPUs don't generate the same image 100%)
+ * Mostly inspired from https://rosettacode.org/wiki/Percentage_difference_between_images#Kotlin
+ */
+private fun Bitmap.compare(other: Bitmap): Float {
     if (this.width != other.width || this.height != other.height) {
         throw AssertionError("Size of screenshot does not match golden file (check device density)")
     }
-    // Compare row by row to save memory on device
+
     val row1 = IntArray(width)
     val row2 = IntArray(width)
+
+    var difference = 0L
+
     for (column in 0 until height) {
-        // Read one row per bitmap and compare
         this.getRow(row1, column)
         other.getRow(row2, column)
-        if (!row1.contentEquals(row2)) {
-            throw AssertionError("Sizes match but bitmap content has differences")
+
+        for (row in 0 until width) {
+            difference += row1[row].pixelDifference(row2[row])
         }
     }
+
+    val maxDifference = 3L * 255 * width * height
+
+    return 100.0f * difference / maxDifference
+}
+
+private fun Int.pixelDifference(other: Int): Int {
+    val red = ((this shr 16) and 0xff) to ((other shr 16) and 0xff)
+    val green = ((this shr 8) and 0xff) to ((other shr 8) and 0xff)
+    val blue = (this and 0xff) to (other and 0xff)
+
+    return abs(red.first - red.second) +
+            abs(green.first - green.second) +
+            abs(blue.first - blue.second)
 }
 
 private fun Bitmap.getRow(pixels: IntArray, column: Int) {

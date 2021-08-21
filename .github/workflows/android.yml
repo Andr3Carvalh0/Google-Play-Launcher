@@ -82,9 +82,7 @@ jobs:
           profile: pixel_2
           emulator-options: -no-snapshot-save -no-window -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: |
-            echo sr > ./app/src/androidTest/assets/details.txt
-            ./gradlew connectedCheck
+          script: ./gradlew connectedCheck
 
   build:
     runs-on: ubuntu-latest
