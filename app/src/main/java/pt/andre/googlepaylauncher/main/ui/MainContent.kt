@@ -25,7 +25,20 @@ private fun color(id: Int): Color {
 }
 
 @Composable
-private fun iconTint(
+private fun backgroundTint(
+    isDarkMode: Boolean
+): Color {
+    val color = if (isDarkMode) {
+        R.color.black
+    } else {
+        R.color.white
+    }
+
+    return color(color)
+}
+
+@Composable
+private fun componentTint(
     isDarkMode: Boolean
 ): Color {
     val color = if (isDarkMode) {
@@ -44,14 +57,14 @@ internal fun MainContent(
     return Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color(id = R.color.backgroundColor)),
+            .background(backgroundTint(isDarkMode = isDarkMode)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
             imageVector = Icons.Default.Info,
             contentDescription = "",
-            tint = iconTint(isDarkMode),
+            tint = componentTint(isDarkMode),
             modifier = Modifier.size(72.dp)
         )
         
@@ -59,13 +72,24 @@ internal fun MainContent(
 
         Text(
             text = stringResource(R.string.no_gpay_installed),
-            color = color(id = R.color.textColor)
+            color = componentTint(isDarkMode = isDarkMode)
         )
     }
 }
 
 @Composable
 @Preview
-private fun MainContentPreview() {
-    MainContent()
+private fun MainContentLightPreview() {
+    MainContent(
+        isDarkMode = false
+    )
+}
+
+
+@Composable
+@Preview
+private fun MainContentDarkPreview() {
+    MainContent(
+        isDarkMode = true
+    )
 }
