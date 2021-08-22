@@ -9,7 +9,7 @@ internal interface ApplicationManager {
 
 internal class ApplicationManagerImpl(
     private val packageManager: PackageManager
-): ApplicationManager {
+) : ApplicationManager {
     override fun getApplicationStartIntent(id: String): Intent? {
         return packageManager.getLaunchIntentForPackage(id)
     }

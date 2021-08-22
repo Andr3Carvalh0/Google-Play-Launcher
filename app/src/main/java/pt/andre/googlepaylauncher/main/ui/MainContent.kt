@@ -1,7 +1,12 @@
 package pt.andre.googlepaylauncher.main.ui
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -67,7 +72,7 @@ internal fun MainContent(
             tint = componentTint(isDarkMode),
             modifier = Modifier.size(72.dp)
         )
-        
+
         Spacer(modifier = Modifier.padding(5.dp))
 
         Text(
@@ -84,7 +89,6 @@ private fun MainContentLightPreview() {
         isDarkMode = false
     )
 }
-
 
 @Composable
 @Preview

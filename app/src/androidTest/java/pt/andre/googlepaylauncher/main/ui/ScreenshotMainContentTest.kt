@@ -2,7 +2,9 @@ package pt.andre.googlepaylauncher.main.ui
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
-import org.junit.*
+import org.junit.AfterClass
+import org.junit.Rule
+import org.junit.Test
 import pt.andre.googlepaylauncher.utilities.ScreenshotComparator
 import pt.andre.googlepaylauncher.utilities.TestCase
 import pt.andre.googlepaylauncher.utilities.density
@@ -13,16 +15,14 @@ class ScreenshotMainContentTest {
     val composeTestRule = createComposeRule()
 
     companion object {
-        private const val SCREENSHOT_LOCATIONS = "main"
-
-        private fun folder() = "$SCREENSHOT_LOCATIONS/$density"
+        private val testCase = TestCase(
+            folder = "main/$density"
+        )
 
         @AfterClass
         @JvmStatic
         internal fun cleanup() {
-            ScreenshotComparator.clean(
-                TestCase(folder = folder())
-            )
+            ScreenshotComparator.clean(testCase)
         }
     }
 
@@ -42,8 +42,7 @@ class ScreenshotMainContentTest {
         }
 
         ScreenshotComparator.assertScreenshotMatches(
-            testCase = TestCase(
-                folder = folder(),
+            testCase = testCase.copy(
                 filename = if (isDarkMode) "dark" else "light"
             ),
             node = composeTestRule.onRoot()
