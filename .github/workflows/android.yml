@@ -2,9 +2,8 @@ name: Android Worker
 
 on:
   push:
-    tags: 'v*'
-    branches:
-      [ release ]
+    tags: [ 'v*' ]
+    branches: [ '*' ]
 
 jobs:
   unit_tests:
@@ -38,7 +37,7 @@ jobs:
     strategy:
       matrix:
         sdk: [ 29 ]
-        profile: [ pixel_2 ]
+        profile: [ pixel_xl, pixel_2 ]
     steps:
       - uses: actions/checkout@v2
 
