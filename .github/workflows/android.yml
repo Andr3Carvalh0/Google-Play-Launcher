@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: git fetch --prune --unshallow
 
       - name: set up JDK 11
         uses: actions/setup-java@v2
@@ -37,7 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: git fetch --prune --unshallow
 
       - name: set up JDK 11
         uses: actions/setup-java@v2
@@ -64,7 +62,6 @@ jobs:
         profile: [ pixel_xl, pixel_2 ]
     steps:
       - uses: actions/checkout@v2
-      - run: git fetch --prune --unshallow
 
       - name: set up JDK 11
         uses: actions/setup-java@v2
@@ -140,6 +137,7 @@ jobs:
       - name: building
         run: ./gradlew assembleRelease
         env:
+          VERSION_NAME: ${{ github.ref }}
           GOOGLE_PAY_LAUNCHER_KEY: ${{ secrets.GOOGLE_PAY_LAUNCHER_KEY }}
           GOOGLE_PAY_LAUNCHER_PASSWORD: ${{ secrets.GOOGLE_PAY_LAUNCHER_PASSWORD }}
 

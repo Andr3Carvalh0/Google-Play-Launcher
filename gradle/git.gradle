@@ -1,4 +1,10 @@
 ext.code = { ->
+    def versionCode = System.getenv('VERSION_CODE')
+
+    if (versionCode != null) {
+        return Integer.parseInt(versionCode)
+    }
+
     try {
         def stdout = new ByteArrayOutputStream()
         exec {
@@ -14,6 +20,12 @@ ext.code = { ->
 }
 
 ext.name = { ->
+    def versionName = System.getenv('VERSION_NAME')
+
+    if (versionName != null) {
+        return versionName.replace('v', '')
+    }
+
     try {
         def stdout = new ByteArrayOutputStream()
         exec {
