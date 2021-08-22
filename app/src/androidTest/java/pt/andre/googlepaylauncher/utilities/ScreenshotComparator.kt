@@ -24,7 +24,6 @@ import androidx.annotation.RequiresApi
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.captureToImage
-import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.abs
@@ -41,8 +40,6 @@ object ScreenshotComparator {
     internal fun clean(
         testCase: TestCase
     ) {
-        val filesDir = InstrumentationRegistry.getInstrumentation().targetContext.filesDir
-
         with(File(filesDir, testCase.folder)) {
             deleteRecursively()
         }
@@ -70,8 +67,7 @@ object ScreenshotComparator {
             bitmap = bitmap
         )
 
-        val expectedBitmap = InstrumentationRegistry.getInstrumentation()
-            .context.resources.assets.open("${testCase.folder}/${testCase.filename}.png")
+        val expectedBitmap = assets("${testCase.folder}/${testCase.filename}.png")
             .use { BitmapFactory.decodeStream(it) }
 
         val difference = expectedBitmap.compare(bitmap)
@@ -87,8 +83,6 @@ private fun saveScreenshot(
     filename: String,
     bitmap: Bitmap
 ) {
-    val filesDir = InstrumentationRegistry.getInstrumentation().targetContext.filesDir
-
     val path = File(filesDir, folder).also {
         if (!it.exists()) {
             it.mkdirs()

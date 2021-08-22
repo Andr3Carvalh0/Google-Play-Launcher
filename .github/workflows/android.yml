@@ -35,8 +35,10 @@ jobs:
 
   ui_tests:
     runs-on: macos-latest
-    env:
-      ANDROID_SDK: 29
+    strategy:
+      matrix:
+        sdk: [ 29 ]
+        profile: [ pixel_2 ]
     steps:
       - uses: actions/checkout@v2
 
@@ -61,15 +63,15 @@ jobs:
           path: |
             ~/.android/avd/*
             ~/.android/adb*
-          key: android-${{ env.ANDROID_SDK }}
+          key: android-${{ matrix.sdk }}
 
       - name: create AVD and generate snapshot for caching
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ env.ANDROID_SDK }}
+          api-level: ${{ matrix.sdk }}
           force-avd-creation: true
-          profile: pixel_2
+          profile: ${{ matrix.profile }}
           emulator-options: -no-window -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
@@ -77,9 +79,9 @@ jobs:
       - name: ui tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: ${{ env.ANDROID_SDK }}
+          api-level: ${{ matrix.sdk }}
           force-avd-creation: false
-          profile: pixel_2
+          profile: ${{ matrix.profile }}
           emulator-options: -no-snapshot-save -no-window -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: ./gradlew connectedCheck
