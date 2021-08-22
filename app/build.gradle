@@ -10,36 +10,6 @@ String GOOGLE_PAY_PACKAGE_ID = 'com.google.android.apps.walletnfcrel'
 String KEY = System.getenv('GOOGLE_PAY_LAUNCHER_KEY')
 String PASSWORD = System.getenv('GOOGLE_PAY_LAUNCHER_PASSWORD')
 
-def code() {
-    try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'rev-list', '--first-parent', '--count', 'release'
-            standardOutput = stdout
-        }
-
-        return Integer.parseInt(stdout.toString().trim())
-    }
-    catch (ignored) {
-        return 1
-    }
-}
-
-def name() {
-    try {
-        def stdout = new ByteArrayOutputStream()
-        exec {
-            commandLine 'git', 'describe', '--abbrev=0'
-            standardOutput = stdout
-        }
-
-        return stdout.toString().trim().replace('v', '')
-    }
-    catch (ignored) {
-        return null
-    }
-}
-
 android {
     compileSdk 30
     buildToolsVersion '31.0.0'
@@ -48,8 +18,8 @@ android {
         applicationId 'pt.andre.googlepaylauncher'
         minSdk 23
         targetSdk 30
-        versionCode code()
-        versionName name()
+        versionCode rootProject.ext.code()
+        versionName rootProject.ext.name()
         manifestPlaceholders = [google_pay_id: GOOGLE_PAY_PACKAGE_ID]
         buildConfigField 'String', 'GOOGLE_PAY_PACKAGE_ID', "\"" + GOOGLE_PAY_PACKAGE_ID + "\""
 
