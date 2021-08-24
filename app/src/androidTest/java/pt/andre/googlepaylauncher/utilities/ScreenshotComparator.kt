@@ -15,7 +15,8 @@ package pt.andre.googlepaylauncher.utilities
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * Somewhat modified by: André Carvalho
+ * Based of: https://github.com/googlecodelabs/android-compose-codelabs/blob/main/TestingCodelab/app/src/androidTest/java/com/example/compose/rally/ScreenshotComparator.kt
+ * Modified to not exactly match both bitmaps(cause depending on the gpu there could be minor changes) by André Carvalho
  */
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -28,10 +29,11 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.abs
 
-data class TestCase(
+internal data class TestCase(
     val folder: String,
     val filename: String = "",
-    val threshold: Float = 0.1f
+    // Can be a value between 0 - 100
+    val thresholdInPercentage: Float = 0.5f
 ) {
     fun safeFolderPathname(): String = folder.replace("/", "_")
 }
@@ -72,8 +74,8 @@ object ScreenshotComparator {
 
         val difference = expectedBitmap.compare(bitmap)
 
-        if (difference >= testCase.threshold) {
-            throw AssertionError("Sizes match but bitmap content has differences")
+        if (difference >= testCase.thresholdInPercentage) {
+            throw AssertionError("Sizes match but bitmap content has differences. ($difference% different)")
         }
     }
 }
