@@ -27,6 +27,8 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.captureToImage
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
+import kotlin.jvm.Throws
 import kotlin.math.abs
 
 /**
@@ -40,7 +42,7 @@ import kotlin.math.abs
 internal data class TestCase(
     val folder: String,
     val filename: String = "",
-    val maxErrorPercentage: Float = 0.5f
+    val maxErrorPercentage: Float = 1.0f
 ) {
     fun safeFolderPathname(): String = folder.replace("/", "_")
 }
@@ -63,6 +65,7 @@ object ScreenshotComparator {
      * Screenshots are saved on device in `/data/data/{package}/files`.
      */
     @RequiresApi(Build.VERSION_CODES.O)
+    @Throws(IOException::class, AssertionError::class)
     internal fun assertScreenshotMatches(
         testCase: TestCase,
         node: SemanticsNodeInteraction
