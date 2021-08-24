@@ -29,11 +29,18 @@ import java.io.File
 import java.io.FileOutputStream
 import kotlin.math.abs
 
+/**
+ * This class represents a screenshot test case.
+ *
+ * @property folder the test case folder path.
+ * @property filename the screenshot filename that's in [folder].
+ * @property maxErrorPercentage the error threshold we should accept. This must be a value between 0 and 100 (since it represents a percentage).
+ * If the difference between the sourced image and the captured image is bigger or equal than this value an [AssertionError] is thrown.
+ */
 internal data class TestCase(
     val folder: String,
     val filename: String = "",
-    // Can be a value between 0 - 100
-    val thresholdInPercentage: Float = 0.5f
+    val maxErrorPercentage: Float = 0.5f
 ) {
     fun safeFolderPathname(): String = folder.replace("/", "_")
 }
@@ -74,8 +81,8 @@ object ScreenshotComparator {
 
         val difference = expectedBitmap.compare(bitmap)
 
-        if (difference >= testCase.thresholdInPercentage) {
-            throw AssertionError("Sizes match but bitmap content has differences. ($difference% different)")
+        if (difference >= testCase.maxErrorPercentage) {
+            throw AssertionError("Sizes match but bitmap content has differences. ($difference% different).")
         }
     }
 }
@@ -95,7 +102,7 @@ private fun saveScreenshot(
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
     }
 
-    println("Saved screenshot to $path/$filename.png")
+    println("Saved screenshot to $path/$filename.png.")
 }
 
 /**
@@ -105,7 +112,7 @@ private fun saveScreenshot(
  */
 private fun Bitmap.compare(other: Bitmap): Float {
     if (this.width != other.width || this.height != other.height) {
-        throw AssertionError("Size of screenshot does not match golden file (check device density)")
+        throw AssertionError("Size of screenshot does not match golden file (check device density).")
     }
 
     val row1 = IntArray(width)
