@@ -6,6 +6,6 @@
 version: 2
 updates:
   - package-ecosystem: "gradle"
-    directory: "/gradle/dependencies.gradle"
+    directory: "/"
     schedule:
       interval: "daily"
