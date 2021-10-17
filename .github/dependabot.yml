@@ -11,10 +11,3 @@ updates:
       interval: "daily"
     reviewers:
       - "Andr3Carvalh0"
-      
-  - package-ecosystem: "gradle"
-    directory: "/app"
-    schedule:
-      interval: "daily"
-    reviewers:
-      - "Andr3Carvalh0"
