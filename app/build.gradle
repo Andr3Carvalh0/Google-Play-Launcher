@@ -11,13 +11,12 @@ String KEY = System.getenv('GOOGLE_PAY_LAUNCHER_KEY')
 String PASSWORD = System.getenv('GOOGLE_PAY_LAUNCHER_PASSWORD')
 
 android {
-    compileSdk 30
-    buildToolsVersion '31.0.0'
+    compileSdk 31
 
     defaultConfig {
         applicationId 'pt.andre.googlepaylauncher'
         minSdk 23
-        targetSdk 30
+        targetSdk 31
         versionCode rootProject.ext.code()
         versionName rootProject.ext.name()
         manifestPlaceholders = [google_pay_id: GOOGLE_PAY_PACKAGE_ID]
