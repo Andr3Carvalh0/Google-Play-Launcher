@@ -4,6 +4,7 @@
     <color name="black">#202020</color>
 
     <color name="backgroundColor">@color/white</color>
+    <color name="iconColor">@color/black</color>
     <color name="textColor">@color/black</color>
     <color name="textLightTint">@color/black</color>
     <color name="textDarkTint">@color/white</color>

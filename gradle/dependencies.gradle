@@ -7,7 +7,7 @@ ext {
             coroutines  : '1.5.2',
             detekt      : '1.18.1',
             gradleTools : '7.0.3',
-            hilt        : '2.40',
+            hilt        : '2.40.1',
             junit       : '4.13.2',
             kotlin      : '1.5.31',
             mockito     : '4.0.0'
