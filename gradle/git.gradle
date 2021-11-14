@@ -33,7 +33,9 @@ ext.name = { ->
             standardOutput = stdout
         }
 
-        return stdout.toString().trim().replace('v', '')
+        return stdout.toString().trim()
+                .replaceAll('refs/tags/', '')
+                .replace('v', '')
     }
     catch (ignored) {
         return null
