@@ -23,7 +23,9 @@ ext.name = { ->
     def versionName = System.getenv('VERSION_NAME')
 
     if (versionName != null) {
-        return versionName.replace('v', '')
+        return versionName
+                .replaceAll('refs/tags/', '')
+                .replace('v', '')
     }
 
     try {
