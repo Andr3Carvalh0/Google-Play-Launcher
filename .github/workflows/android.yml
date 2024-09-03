@@ -162,7 +162,7 @@ jobs:
           release_name: Release ${{ github.ref }}
 
       - name: fetch uploaded apk
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4.1.7
         with:
           name: artifacts
 
